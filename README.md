@@ -1,10 +1,8 @@
 # Elrond Java SDK
 
-## Work in progress!
-
 ## Introduction
 
-`erdjava` is a child of the monorepo `elrond-sdk`.
+`erdjava` is an SDK written in Java, useful for interacting with the Elrond Network.
 
 ## Prerequisites
 
