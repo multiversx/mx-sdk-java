@@ -3,12 +3,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>elrond</groupId>
+  <groupId>com.elrond</groupId>
   <artifactId>erdjava</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <name>erdjava</name>
+  <description>The Java 1.8 SDK for interacting with the Elrond blockchain</description>
   <url>https://github.com/ElrondNetwork/elrond-sdk-erdjava</url>
+
+  <licenses>
+    <license>
+      <name>GPL-v3.0</name>
+      <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Elrond team</name>
+      <email>contact@elrond.com</email>
+      <organization>Elrond Network</organization>
+      <organizationUrl>https://www.elrond.com</organizationUrl>
+    </developer>
+  </developers>
+  
+  <scm>
+    <connection>scm:git:git://github.com/ElrondNetwork/elrond-sdk-erdjava.git</connection>
+    <developerConnection>scm:git:ssh://github.com:ElrondNetwork/elrond-sdk-erdjava.git</developerConnection>
+    <url>https://github.com/ElrondNetwork/elrond-sdk-erdjava/tree/main</url>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
