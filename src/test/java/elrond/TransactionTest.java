@@ -74,7 +74,7 @@ public class TransactionTest {
 
         // Without data field
         Transaction transaction = new Transaction();
-        transaction.setNonce(0);
+        transaction.setNonce(1);
         transaction.setValue(new BigInteger("1000000000000000"));
         transaction.setSender(Address.fromBech32("erd1lta2vgd0tkeqqadkvgef73y0efs6n3xe5ss589ufhvmt6tcur8kq34qkwr"));
         transaction.setReceiver(Address.fromBech32("erd1p72ru5zcdsvgkkcm9swtvw2zy5epylwgv8vwquptkw7ga7pfvk7qz7snzw"));
@@ -84,6 +84,6 @@ public class TransactionTest {
 
         transaction.sign(wallet);
 
-        assertEquals("6da9836c60f96f7bcb0c7eddb6f769de40e2a857a4e5bca696a3a16135388573", transaction.computeHash());
+        assertEquals("eb000037b70dfe3d89abc50214b3ce0c4afbfe66f2b636834d46e33af690f3d0", transaction.computeHash());
     }
 }
