@@ -9,15 +9,20 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import com.google.gson.GsonBuilder;
+import com.google.protobuf.ByteString;
+import elrond.proto.TransactionOuterClass;
+import org.bouncycastle.crypto.digests.Blake2bDigest;
 import org.bouncycastle.util.encoders.Base64;
 
 import elrond.Exceptions.AddressException;
 import elrond.Exceptions.CannotSerializeTransactionException;
 import elrond.Exceptions.CannotSignTransactionException;
 import elrond.Exceptions.ProxyRequestException;
+import org.bouncycastle.util.encoders.Hex;
 
 public class Transaction {
     public static final int VERSION = 1;
+    private static final int TRANSACTION_HASH_LENGTH = 32;
     private static final Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
     private long nonce;
@@ -88,6 +93,38 @@ public class Transaction {
 
     public void send(IProvider provider) throws CannotSerializeTransactionException, IOException, ProxyRequestException {
         this.txHash = provider.sendTransaction(this);
+    }
+
+    /**
+     * Computes transaction hash without broadcasting it to blockchain
+     */
+    public String computeHash() {
+        TransactionOuterClass.Transaction.Builder builder = TransactionOuterClass.Transaction.newBuilder()
+                .setNonce(this.getNonce())
+                .setValue(ByteString.copyFrom(this.getValue().toByteArray()))
+                .setRcvAddr(ByteString.copyFrom(this.getReceiver().pubkey()))
+                .setSndAddr(ByteString.copyFrom(this.getSender().pubkey()))
+                .setGasPrice(this.getGasPrice())
+                .setGasLimit(this.getGasLimit())
+                .setChainID(ByteString.copyFrom(this.getChainID().getBytes(StandardCharsets.UTF_8)))
+                .setVersion(Transaction.VERSION);
+
+        if (this.data.length() > 0) {
+            builder = builder.setData(ByteString.copyFromUtf8(getData()));
+        }
+
+        if (this.signature.length() > 0) {
+            builder = builder.setSignature(ByteString.copyFromUtf8(getSignature()));
+        }
+
+        elrond.proto.TransactionOuterClass.Transaction transaction = builder.build();
+        final Blake2bDigest hash = new Blake2bDigest(TRANSACTION_HASH_LENGTH * 8);
+        hash.update(transaction.toByteArray(), 0, transaction.toByteArray().length);
+        final byte[] out = new byte[hash.getDigestSize()];
+        hash.doFinal(out, 0);
+
+        this.txHash = new String(Hex.encode(out));
+        return this.txHash;
     }
 
     public void setNonce(long nonce) {
