@@ -67,4 +67,23 @@ public class TransactionTest {
         assertEquals(expectedSignature, transaction.getSignature());
         assertEquals(expectedJson, transaction.serialize());
     }
+
+    @Test
+    public void shouldComputeHash() throws Exception {
+        Wallet wallet = Wallet.deriveFromMnemonic("blind wisdom book round sing capable taste refuse simple thunder profit goddess bird adult skirt road box patient cost tape lawn invite visual rabbit", 0);
+
+        // Without data field
+        Transaction transaction = new Transaction();
+        transaction.setNonce(1);
+        transaction.setValue(new BigInteger("1000000000000000"));
+        transaction.setSender(Address.fromBech32("erd1lta2vgd0tkeqqadkvgef73y0efs6n3xe5ss589ufhvmt6tcur8kq34qkwr"));
+        transaction.setReceiver(Address.fromBech32("erd1p72ru5zcdsvgkkcm9swtvw2zy5epylwgv8vwquptkw7ga7pfvk7qz7snzw"));
+        transaction.setGasPrice(1000000000);
+        transaction.setGasLimit(50000);
+        transaction.setChainID("T");
+
+        transaction.sign(wallet);
+
+        assertEquals("eb000037b70dfe3d89abc50214b3ce0c4afbfe66f2b636834d46e33af690f3d0", transaction.computeHash());
+    }
 }
