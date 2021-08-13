@@ -101,12 +101,13 @@ public class Transaction {
     public String computeHash() {
         TransactionOuterClass.Transaction.Builder builder = TransactionOuterClass.Transaction.newBuilder()
                 .setNonce(this.getNonce())
-                .setValue(ByteString.copyFrom(this.getValue().toByteArray()))
+                .setValue(this.serializeValue())
                 .setRcvAddr(ByteString.copyFrom(this.getReceiver().pubkey()))
                 .setSndAddr(ByteString.copyFrom(this.getSender().pubkey()))
                 .setGasPrice(this.getGasPrice())
                 .setGasLimit(this.getGasLimit())
                 .setChainID(ByteString.copyFrom(this.getChainID().getBytes(StandardCharsets.UTF_8)))
+                .setData(ByteString.copyFrom(this.getData().getBytes(StandardCharsets.UTF_8)))
                 .setVersion(Transaction.VERSION);
 
         if (this.data.length() > 0) {
@@ -114,7 +115,7 @@ public class Transaction {
         }
 
         if (this.signature.length() > 0) {
-            builder = builder.setSignature(ByteString.copyFromUtf8(getSignature()));
+            builder = builder.setSignature(ByteString.copyFrom(Hex.decode(getSignature())));
         }
 
         elrond.proto.TransactionOuterClass.Transaction transaction = builder.build();
@@ -125,6 +126,17 @@ public class Transaction {
 
         this.txHash = new String(Hex.encode(out));
         return this.txHash;
+    }
+
+    private ByteString serializeValue() {
+        byte[] valueBytes = value.toByteArray();
+
+        byte[] bytes = new byte[valueBytes.length + 1];
+        bytes[0] = 0; // positive sign expected on the elrond-go side
+
+        System.arraycopy(valueBytes, 0, bytes, 1, valueBytes.length);
+
+        return ByteString.copyFrom(bytes);
     }
 
     public void setNonce(long nonce) {
