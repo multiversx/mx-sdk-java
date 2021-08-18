@@ -3,18 +3,52 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>elrond</groupId>
+  <groupId>com.elrond</groupId>
   <artifactId>erdjava</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <name>erdjava</name>
-  <url>https://github.com/ElrondNetwork/elrond-sdk</url>
+  <description>The Java 1.8 SDK for interacting with the Elrond blockchain</description>
+  <url>https://github.com/ElrondNetwork/elrond-sdk-erdjava</url>
+
+  <licenses>
+    <license>
+      <name>GPL-v3.0</name>
+      <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Elrond team</name>
+      <email>contact@elrond.com</email>
+      <organization>Elrond Network</organization>
+      <organizationUrl>https://www.elrond.com</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/ElrondNetwork/elrond-sdk-erdjava.git</connection>
+    <developerConnection>scm:git:ssh://github.com:ElrondNetwork/elrond-sdk-erdjava.git</developerConnection>
+    <url>https://github.com/ElrondNetwork/elrond-sdk-erdjava/tree/main</url>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 
   <dependencies>
     <dependency>
@@ -69,6 +103,11 @@
       <version>5.4.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>3.17.3</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -88,9 +127,6 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
-          <configuration>
-            <release>8</release>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -131,10 +167,66 @@
           <version>3.2.0</version>
           <configuration>
             <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-            <reportOutputDirectory>../../elrond-sdk-docs/erdjava</reportOutputDirectory>
+            <reportOutputDirectory>docs</reportOutputDirectory>
             <destDir>erdjava</destDir>
           </configuration>
         </plugin>
+        <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-source-plugin</artifactId>
+           <version>2.2.1</version>
+           <executions>
+               <execution>
+                   <id>attach-sources</id>
+                   <goals>
+                       <goal>jar-no-fork</goal>
+                   </goals>
+               </execution>
+           </executions>
+       </plugin>
+       <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-javadoc-plugin</artifactId>
+           <configuration>
+               <source>8</source>
+           </configuration>
+           <version>2.9.1</version>
+           <executions>
+               <execution>
+                   <id>attach-javadocs</id>
+                   <goals>
+                       <goal>jar</goal>
+                   </goals>
+               </execution>
+           </executions>
+       </plugin>
+       <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-gpg-plugin</artifactId>
+           <version>1.5</version>
+           <executions>
+               <execution>
+                   <id>sign-artifacts</id>
+                   <phase>verify</phase>
+                   <goals>
+                       <goal>sign</goal>
+                   </goals>
+               </execution>
+           </executions>
+       </plugin>
+       <plugin>
+           <groupId>org.sonatype.plugins</groupId>
+           <artifactId>nexus-staging-maven-plugin</artifactId>
+           <version>1.6.7</version>
+           <extensions>true</extensions>
+           <configuration>
+               <serverId>ossrh</serverId>
+               <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+               <autoReleaseAfterClose>true</autoReleaseAfterClose>
+           </configuration>
+       </plugin>
+
+
       </plugins>
     </pluginManagement>
   </build>
