@@ -81,7 +81,7 @@ public class ESDTFunctions {
                 nonce
         );
     }
-    
+
     public static String constructESDTTransferPayload(ESDTTransferTypes types) {
         return ESDTConstants.ESDTTransferPrefix +
                 ESDTConstants.ScCallArgumentsSeparator +
