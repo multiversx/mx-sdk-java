@@ -60,7 +60,7 @@ public class ProxyProvider implements IProvider {
 
     public BigInteger getNFTBalance(Address address, String tokenIdentifier, long nonce) throws IOException, AddressException {
         String hexTokenIdentifier = this.adjustTokenIdentifier(tokenIdentifier);
-        String nonceStr = String.format("%d", nonce);
+        String nonceStr = Long.toString(nonce, 16);
         if(nonceStr.length() % 2 == 1 ) {
             nonceStr = "0" + nonceStr;
         }
