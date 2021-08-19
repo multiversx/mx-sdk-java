@@ -81,8 +81,37 @@ public class ESDTFunctions {
                 nonce
         );
     }
+    
+    public static String constructESDTTransferPayload(ESDTTransferTypes types) {
+        return ESDTConstants.ESDTTransferPrefix +
+                ESDTConstants.ScCallArgumentsSeparator +
+                types.getTokenIdentifier() +
+                ESDTConstants.ScCallArgumentsSeparator +
+                prepareHexValue(types.getValueToTransfer().toString(16));
+    }
+
+    public static String constructNFTTransferPayload(ESDTNFTTransferTypes types) {
+        return ESDTConstants.ESDTNFTTransferPrefix +
+                ESDTConstants.ScCallArgumentsSeparator +
+                types.getTokenIdentifier() +
+                ESDTConstants.ScCallArgumentsSeparator +
+                prepareHexValue(Long.toString(types.getNonce(), 16)) +
+                ESDTConstants.ScCallArgumentsSeparator +
+                prepareHexValue(types.getValueToTransfer().toString(16)) +
+                ESDTConstants.ScCallArgumentsSeparator +
+                types.getReceiver().hex();
+    }
 
     private static BigInteger decodeHexEncodedBigInteger(String number) {
         return new BigInteger(number, 16);
+    }
+
+    private static String prepareHexValue(String value) {
+        String result = value;
+        if (result.length() % 2 == 1) {
+            result = "0" + result;
+        }
+
+        return result;
     }
 }

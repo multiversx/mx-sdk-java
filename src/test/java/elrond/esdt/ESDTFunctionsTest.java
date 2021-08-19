@@ -142,4 +142,44 @@ public class ESDTFunctionsTest {
             ESDTFunctions.extractESDTNFTTransferTypes(tx);
         });
     }
+
+    @Test
+    public void shouldConstructESDTTransferPayload() throws Exceptions.AddressException {
+        Address receiver = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
+        String tokenIdentifier = "TKN";
+        BigInteger value = new BigInteger("100");
+        ESDTTransferTypes types = new ESDTTransferTypes(receiver, receiver, tokenIdentifier, value);
+
+        String result = ESDTFunctions.constructESDTTransferPayload(types);
+
+        assertEquals("ESDTTransfer@TKN@64", result);
+
+        // test value with odd number of characters in hex representation. 10 = a => should be converted to 0a
+        types.setValueToTransfer(new BigInteger("10"));
+        result = ESDTFunctions.constructESDTTransferPayload(types);
+        assertEquals("ESDTTransfer@TKN@0a", result);
+    }
+
+    @Test
+    public void shouldConstructNFTTransferPayload() throws Exceptions.AddressException {
+        Address receiver = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
+        String tokenIdentifier = "TKN";
+        BigInteger value = new BigInteger("100");
+        long nonce = 115;
+        ESDTNFTTransferTypes types = new ESDTNFTTransferTypes(receiver, receiver, tokenIdentifier, value, nonce);
+
+        String result = ESDTFunctions.constructNFTTransferPayload(types);
+
+        assertEquals("ESDTNFTTransfer@TKN@73@64@fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293", result);
+
+        // test nonce with odd number of characters in hex representation. 10 = a => should be converted to 0a
+        types.setNonce(10);
+        result = ESDTFunctions.constructNFTTransferPayload(types);
+        assertEquals("ESDTNFTTransfer@TKN@0a@64@fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293", result);
+
+        // test value with odd number of characters in hex representation. 11 = b => should be converted to 0b
+        types.setValueToTransfer(new BigInteger("11"));
+        result = ESDTFunctions.constructNFTTransferPayload(types);
+        assertEquals("ESDTNFTTransfer@TKN@0a@0b@fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293", result);
+    }
 }
