@@ -5,7 +5,7 @@
 
   <groupId>com.elrond</groupId>
   <artifactId>erdjava</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.0-SNAPSHOT</version>
 
   <name>erdjava</name>
   <description>The Java 1.8 SDK for interacting with the Elrond blockchain</description>
