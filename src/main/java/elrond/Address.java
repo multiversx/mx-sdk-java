@@ -69,8 +69,7 @@ public class Address {
 
     public String bech32() throws AddressException {
         byte[] pubkey = this.pubkey();
-        String address = Bech32.encode(HRP, convertBits(pubkey, 8, 5, true));
-        return address;
+        return Bech32.encode(HRP, convertBits(pubkey, 8, 5, true));
     }
 
     public static boolean isValidBech32(String value) {
@@ -83,6 +82,12 @@ public class Address {
     }
 
     /**
+     * @param data represents the bytes to be converted
+     * @param fromBits represents the starting position
+     * @param toBits represents the ending position
+     * @param pad if set to true, will pad the result
+     * @return returns the converted bytes
+     * @throws AddressException if there is an issue with the data
      * General power-of-2 base conversion.
      */
     public static byte[] convertBits(byte[] data, int fromBits, int toBits, boolean pad) throws Exceptions.AddressException {
