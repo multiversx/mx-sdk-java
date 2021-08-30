@@ -29,9 +29,9 @@ public class NetworkConfig {
     /**
      * Synchronizes the object with the current configuration from a provider
      * 
-     * @param provider
-     * @throws IOException
-     * @throws ProxyRequestException
+     * @param provider represents an interface that is as able to interact with the Blockchain
+     * @throws IOException if there is an issue with the HTTP call
+     * @throws ProxyRequestException if there is an issue with the proxy response
      */
     public void sync(IProvider provider) throws IOException, ProxyRequestException {
         NetworkConfig fresh = provider.getNetworkConfig();

@@ -97,6 +97,7 @@ public class Transaction {
 
     /**
      * Computes transaction hash without broadcasting it to blockchain
+     * @return returns the hash of the transaction after serializing it into proto and applying the blake2b hasher
      */
     public String computeHash() {
         TransactionOuterClass.Transaction.Builder builder = TransactionOuterClass.Transaction.newBuilder()

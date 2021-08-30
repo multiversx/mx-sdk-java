@@ -19,9 +19,9 @@ public class Account {
      * Synchronizes account properties with the ones queried from the Network
      * 
      * @param provider the Network provider
-     * @throws IOException
-     * @throws AddressException
-     * @throws ProxyRequestException
+     * @throws IOException if HTTP call fails
+     * @throws AddressException if the address isn't correct
+     * @throws ProxyRequestException if there is an issue with the proxy request
      */
     public void sync(IProvider provider) throws AddressException, IOException, ProxyRequestException {
         AccountOnNetwork accountOnNetwork = provider.getAccount(this.address);
