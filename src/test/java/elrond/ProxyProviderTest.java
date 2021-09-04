@@ -38,7 +38,7 @@ public class ProxyProviderTest {
         Address address = Address.fromBech32("erd1l453hd0gt5gzdp7czpuall8ggt2dcv5zwmfdf3sd3lguxseux2fsmsgldz");
         ProxyProvider.ESDTDataResponse esdtData = this.provider.getESDTData(address, "ALC-64e960");
 
-        assertEquals(esdtData.balance, new BigInteger("0"));
+        assertEquals(BigInteger.ZERO, esdtData.balance);
     }
 
     @Test
@@ -46,6 +46,6 @@ public class ProxyProviderTest {
         Address address = Address.fromBech32("erd1l453hd0gt5gzdp7czpuall8ggt2dcv5zwmfdf3sd3lguxseux2fsmsgldz");
         BigInteger balance = this.provider.getNFTBalance(address, "414c432d363465393630", 4);
 
-        assertEquals(balance, new BigInteger("0"));
+        assertEquals(BigInteger.ZERO, balance);
     }
 }
