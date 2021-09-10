@@ -61,21 +61,21 @@ public class ProxyProvider implements IProvider {
     public BigInteger getNFTBalance(Address address, String tokenIdentifier, long nonce) throws IOException, AddressException {
         String hexTokenIdentifier = this.adjustTokenIdentifier(tokenIdentifier);
         String nonceStr = Long.toString(nonce, 16);
-        if(nonceStr.length() % 2 == 1 ) {
+        if (nonceStr.length() % 2 == 1) {
             nonceStr = "0" + nonceStr;
         }
         String nftID = String.format("%s-%s", hexTokenIdentifier, nonceStr);
         String responseJson = this.doGet(String.format("accounts/%s/nfts/%s", address.bech32(), nftID));
         NFTDataResponse typedResponse = gson.fromJson(responseJson, NFTDataResponse.class);
         if (typedResponse == null || typedResponse.balance == null) {
-           return BigInteger.ZERO;
+            return BigInteger.ZERO;
         }
 
         return typedResponse.balance;
     }
 
     private String adjustTokenIdentifier(String tokenIdentifier) {
-        if(tokenIdentifier.contains("-")) {
+        if (tokenIdentifier.contains("-")) {
             return tokenIdentifier;
         }
 
@@ -136,7 +136,8 @@ public class ProxyProvider implements IProvider {
         }
     }
 
-    public static class ResponseOfGetNetworkConfig extends ResponseBase<WrapperOfGetNetworkConfig> {}
+    public static class ResponseOfGetNetworkConfig extends ResponseBase<WrapperOfGetNetworkConfig> {
+    }
 
     public static class WrapperOfGetNetworkConfig {
         @SerializedName(value = "config")
