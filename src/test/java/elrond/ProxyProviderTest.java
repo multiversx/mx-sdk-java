@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-@Ignore("performs HTTP requests")
 public class ProxyProviderTest {
     private final Address testAddress = Address.fromBech32("erd1l453hd0gt5gzdp7czpuall8ggt2dcv5zwmfdf3sd3lguxseux2fsmsgldz");
 
