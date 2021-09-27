@@ -124,7 +124,7 @@ public class Address {
         for (byte value : data) {
             int valueAsInt = value & 0xff;
 
-            if ((valueAsInt < 0) || (valueAsInt >>> fromBits != 0)) {
+            if (valueAsInt >>> fromBits != 0) {
                 throw new Exceptions.CannotConvertBitsException();
             }
 
