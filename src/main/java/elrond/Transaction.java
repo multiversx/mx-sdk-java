@@ -96,12 +96,13 @@ public class Transaction {
 
     /**
      * Computes transaction hash without broadcasting it to blockchain
+     *
      * @return returns the hash of the transaction after serializing it into proto and applying the blake2b hasher
      */
     public String computeHash() {
         TransactionOuterClass.Transaction.Builder builder = TransactionOuterClass.Transaction.newBuilder()
                 .setNonce(this.getNonce())
-                .setValue(this.serializeValue())
+                .setValue(BigIntegerCodec.serializeValue(this.value))
                 .setRcvAddr(ByteString.copyFrom(this.getReceiver().pubkey()))
                 .setSndAddr(ByteString.copyFrom(this.getSender().pubkey()))
                 .setGasPrice(this.getGasPrice())
@@ -126,26 +127,6 @@ public class Transaction {
 
         this.txHash = new String(Hex.encode(out));
         return this.txHash;
-    }
-
-    public ByteString serializeValue() {
-        if(this.value == null) {
-            return ByteString.copyFrom("".getBytes());
-        }
-
-        byte[] valueBytes = value.toByteArray();
-        boolean isFirstByteForTheSign = valueBytes[0] == (byte) 0;
-        boolean isZero = value.intValue() == 0;
-
-        if (!isFirstByteForTheSign || isZero) {
-            byte[] bytes = new byte[valueBytes.length + 1];
-            bytes[0] = 0; // positive sign expected on the elrond-go side
-
-            System.arraycopy(valueBytes, 0, bytes, 1, valueBytes.length);
-            return ByteString.copyFrom(bytes);
-        }
-
-        return ByteString.copyFrom(valueBytes);
     }
 
     public void setNonce(long nonce) {
