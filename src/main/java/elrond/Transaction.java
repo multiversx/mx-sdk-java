@@ -51,8 +51,7 @@ public class Transaction {
     public String serialize() throws CannotSerializeTransactionException {
         try {
             Map<String, Object> map = this.toMap();
-            String json = gson.toJson(map);
-            return json;
+            return gson.toJson(map);
         } catch (AddressException error) {
             throw new CannotSerializeTransactionException();
         }
@@ -129,15 +128,24 @@ public class Transaction {
         return this.txHash;
     }
 
-    private ByteString serializeValue() {
+    public ByteString serializeValue() {
+        if(this.value == null) {
+            return ByteString.copyFrom("".getBytes());
+        }
+
         byte[] valueBytes = value.toByteArray();
+        boolean isFirstByteForTheSign = valueBytes[0] == (byte) 0;
+        boolean isZero = value.intValue() == 0;
 
-        byte[] bytes = new byte[valueBytes.length + 1];
-        bytes[0] = 0; // positive sign expected on the elrond-go side
+        if (!isFirstByteForTheSign || isZero) {
+            byte[] bytes = new byte[valueBytes.length + 1];
+            bytes[0] = 0; // positive sign expected on the elrond-go side
 
-        System.arraycopy(valueBytes, 0, bytes, 1, valueBytes.length);
+            System.arraycopy(valueBytes, 0, bytes, 1, valueBytes.length);
+            return ByteString.copyFrom(bytes);
+        }
 
-        return ByteString.copyFrom(bytes);
+        return ByteString.copyFrom(valueBytes);
     }
 
     public void setNonce(long nonce) {
@@ -150,10 +158,6 @@ public class Transaction {
 
     public void setValue(BigInteger value) {
         this.value = value;
-    }
-
-    public BigInteger getValue() {
-        return value;
     }
 
     public void setSender(Address sender) {
