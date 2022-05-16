@@ -33,24 +33,24 @@ public class Exceptions {
     }
 
     public static class CannotCreateAddressException extends AddressException {
-        
+
         /**
          *
          */
         private static final long serialVersionUID = 1249335179408397539L;
-        
+
         public CannotCreateAddressException(Object input) {
             super(String.format("Cannot create address from: %s", input.toString()));
         }
     }
 
     public static class CannotCreateBech32AddressException extends AddressException {
-        
+
         /**
          *
          */
         private static final long serialVersionUID = 1249335179408397539L;
-        
+
         public CannotCreateBech32AddressException(Object input) {
             super(String.format("Cannot create bech32 address from: %s", input.toString()));
         }
@@ -64,7 +64,7 @@ public class Exceptions {
         private static final long serialVersionUID = 7074540271315613570L;
     }
 
-    public static class EmptyAddressException extends AddressException{
+    public static class EmptyAddressException extends AddressException {
 
         /**
          *
@@ -148,6 +148,32 @@ public class Exceptions {
         }
 
         public ProxyRequestException(String message) {
+            super(message);
+        }
+    }
+
+    public static class InvalidESDTTransferPayload extends KnownException {
+
+        private static final long serialVersionUID = -1876426938570271813L;
+
+        public InvalidESDTTransferPayload() {
+            super();
+        }
+
+        public InvalidESDTTransferPayload(String message) {
+            super(message);
+        }
+    }
+
+    public static class InvalidESDTNFTTransferPayload extends KnownException {
+
+        private static final long serialVersionUID = 6087186089072604719L;
+
+        public InvalidESDTNFTTransferPayload() {
+            super();
+        }
+
+        public InvalidESDTNFTTransferPayload(String message) {
             super(message);
         }
     }

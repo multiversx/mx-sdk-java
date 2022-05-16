@@ -18,6 +18,7 @@ public class BroadcastTest {
 
     @Test
     public void sendTransactions() throws Exception {
+        // this test doesn't use mock http server because it is a very good example of for transactions can be sent to the chain
         NetworkConfig.getDefault().sync(this.provider);
 
         Address addressOfAlice = Address.fromBech32("erd1l453hd0gt5gzdp7czpuall8ggt2dcv5zwmfdf3sd3lguxseux2fsmsgldz");
