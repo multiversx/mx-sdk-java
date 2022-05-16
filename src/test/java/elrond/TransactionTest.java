@@ -1,12 +1,8 @@
 package elrond;
 
-import com.google.protobuf.ByteString;
-import org.apache.commons.codec.binary.Hex;
 import org.junit.Test;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
