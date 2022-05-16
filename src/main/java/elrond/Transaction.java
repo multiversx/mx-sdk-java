@@ -102,7 +102,7 @@ public class Transaction {
     public String computeHash() {
         TransactionOuterClass.Transaction.Builder builder = TransactionOuterClass.Transaction.newBuilder()
                 .setNonce(this.getNonce())
-                .setValue(BigIntegerCodec.serializeValue(this.value))
+                .setValue(BigIntegerCodec.serializeValue(this.getValue()))
                 .setRcvAddr(ByteString.copyFrom(this.getReceiver().pubkey()))
                 .setSndAddr(ByteString.copyFrom(this.getSender().pubkey()))
                 .setGasPrice(this.getGasPrice())
@@ -139,6 +139,10 @@ public class Transaction {
 
     public void setValue(BigInteger value) {
         this.value = value;
+    }
+
+    public BigInteger getValue() {
+        return value;
     }
 
     public void setSender(Address sender) {
