@@ -1,6 +1,7 @@
 package elrond;
 
 import org.junit.Test;
+
 import java.math.BigInteger;
 
 import static org.junit.Assert.assertEquals;
@@ -85,5 +86,12 @@ public class TransactionTest {
         transaction.sign(wallet);
 
         assertEquals("eb000037b70dfe3d89abc50214b3ce0c4afbfe66f2b636834d46e33af690f3d0", transaction.computeHash());
+
+        // With data field
+        transaction.setData("test data");
+
+        transaction.sign(wallet);
+
+        assertEquals("3fb8406c408fbdd9b01ce8c8a0dcbb1a382cba713a132f40d552ec8db63c89a5", transaction.computeHash());
     }
 }
