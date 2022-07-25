@@ -3,9 +3,7 @@ package elrond.esdt.builders;
 import elrond.Address;
 import elrond.esdt.common.Constants;
 import elrond.esdt.common.TokenPayment;
-import org.apache.commons.codec.binary.Hex;
-
-import java.math.BigInteger;
+import elrond.esdt.common.Utils;
 
 public class MultiTransferBuilder {
     private TokenPayment[] payments;
@@ -29,14 +27,12 @@ public class MultiTransferBuilder {
 
         builder.append(String.join(Constants.ArgsDelimiter, Constants.MultiESDTNFTTransferFunction, this.receiver.hex()));
 
-        String numTransfers = Integer.toHexString(this.payments.length);
-        numTransfers = numTransfers.length() % 2 == 0 ? numTransfers : "0"+numTransfers;
+        String numTransfers = Utils.castToPaddedHex(this.payments.length);
 
         builder.append(Constants.ArgsDelimiter).append(numTransfers);
 
         for (TokenPayment payment : payments) {
-            BigInteger nonceBI = new BigInteger(payment.getNonce().toString());
-            String nonceHex = Hex.encodeHexString(nonceBI.toByteArray());
+            String nonceHex = Utils.castToPaddedHex(payment.getNonce());
             builder.append(Constants.ArgsDelimiter)
                     .append(String.join(Constants.ArgsDelimiter, payment.getTokenIdentifier().toHexString(), nonceHex, payment.valueToHexString()));
         }

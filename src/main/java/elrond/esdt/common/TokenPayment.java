@@ -20,7 +20,7 @@ public class TokenPayment {
     }
 
     public static TokenPayment egldFromAmount(String amount) {
-        BigDecimal amountAsBigDecimal = addDecimalsToBigDecimal(new BigDecimal(amount), Constants.EGLDNumDecimals);
+        BigDecimal amountAsBigDecimal = increaseMagnitude(new BigDecimal(amount), Constants.EGLDNumDecimals);
         return TokenPayment.egldFromBigDecimal(amountAsBigDecimal);
     }
 
@@ -29,7 +29,7 @@ public class TokenPayment {
     }
 
     public static TokenPayment fungibleFromAmount(TokenIdentifier tokenIdentifier, String amount, Integer numDecimals) {
-        BigDecimal amountAsBigDecimal = addDecimalsToBigDecimal(new BigDecimal(amount), numDecimals);
+        BigDecimal amountAsBigDecimal = increaseMagnitude(new BigDecimal(amount), numDecimals);
         return TokenPayment.fungibleFromBigDecimal(tokenIdentifier, amountAsBigDecimal, numDecimals);
     }
 
@@ -42,10 +42,10 @@ public class TokenPayment {
     }
 
     public static TokenPayment nonFungible(TokenIdentifier tokenIdentifier, Long nonce) {
-        return new TokenPayment(tokenIdentifier, addDecimalsToBigDecimal(new BigDecimal("1"), 0), 0, nonce);
+        return new TokenPayment(tokenIdentifier, increaseMagnitude(new BigDecimal("1"), 0), 0, nonce);
     }
 
-    private static BigDecimal addDecimalsToBigDecimal(BigDecimal input, Integer numDecimals) {
+    private static BigDecimal increaseMagnitude(BigDecimal input, Integer numDecimals) {
         String inputStr = "1" + String.join("", Collections.nCopies(numDecimals, "0")); // numDecimals = 3 will produce 1000
         BigDecimal multipliedBy = new BigDecimal(inputStr);
 

@@ -6,7 +6,9 @@ import org.apache.commons.codec.binary.Hex;
 import java.nio.charset.StandardCharsets;
 
 public class TokenIdentifier {
-    private TokenIdentifier() {}
+    private TokenIdentifier() {
+    }
+
     private String hexTokenIdentifier;
 
     public static TokenIdentifier fromString(String tokenIdentifier) {
@@ -23,14 +25,8 @@ public class TokenIdentifier {
         return ti;
     }
 
-    @Override
-    public String toString() {
-        byte[] bytes = new byte[0];
-        try {
-            bytes = Hex.decodeHex(this.hexTokenIdentifier.toCharArray());
-        } catch (DecoderException e) {
-            e.printStackTrace();
-        }
+    public String toRegularString() throws DecoderException {
+        byte[] bytes = Hex.decodeHex(this.hexTokenIdentifier.toCharArray());
 
         return new String(bytes, StandardCharsets.UTF_8);
     }

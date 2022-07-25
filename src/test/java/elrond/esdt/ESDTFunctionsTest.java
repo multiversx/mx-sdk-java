@@ -50,13 +50,13 @@ public class ESDTFunctionsTest {
 
         Address sender = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
         Address receiver = Address.fromHex("c70cf50b238372fffaf7b7c5723b06b57859d424a2da621bcc1b2f317543aa36");
-        String tokenIdentifier = "4552444a4156412d333866323439";
+        String tokenIdentifierHex = "4552444a4156412d333866323439";
         BigInteger valueToTransfer = new BigInteger("100");
 
         // construct and test the data field
         String txPayload = ESDTConstants.ESDTTransferPrefix +
                 ESDTConstants.ScCallArgumentsSeparator +
-                tokenIdentifier +
+                tokenIdentifierHex +
                 ESDTConstants.ScCallArgumentsSeparator +
                 valueToTransfer.toString(16);
         assertEquals("ESDTTransfer@4552444a4156412d333866323439@64", txPayload); // check the construction of the data field
@@ -68,7 +68,7 @@ public class ESDTFunctionsTest {
         ESDTTransferTypes result = ESDTFunctions.extractESDTTransferTypes(tx);
         assertEquals(tx.getSender(), result.getSender());
         assertEquals(tx.getReceiver(), result.getReceiver());
-        assertEquals(tokenIdentifier, result.getTokenIdentifier());
+        assertEquals(tokenIdentifierHex, result.getTokenIdentifier());
         assertEquals(valueToTransfer, result.getValueToTransfer());
     }
 
@@ -78,14 +78,14 @@ public class ESDTFunctionsTest {
 
         Address sender = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
         Address receiver = Address.fromHex("c70cf50b238372fffaf7b7c5723b06b57859d424a2da621bcc1b2f317543aa36");
-        String tokenIdentifier = "4552444a4156412d333866323439";
+        String tokenIdentifierHex = "4552444a4156412d333866323439";
         BigInteger valueToTransfer = new BigInteger("100");
         long nonce = 20;
 
         // construct and test the data field
         String txPayload = ESDTConstants.ESDTNFTTransferPrefix +
                 ESDTConstants.ScCallArgumentsSeparator +
-                tokenIdentifier +
+                tokenIdentifierHex +
                 ESDTConstants.ScCallArgumentsSeparator +
                 Long.toString(nonce, 16) +
                 ESDTConstants.ScCallArgumentsSeparator +
@@ -102,7 +102,7 @@ public class ESDTFunctionsTest {
         ESDTNFTTransferTypes result = ESDTFunctions.extractESDTNFTTransferTypes(tx);
         assertEquals(tx.getSender(), result.getSender());
         assertEquals(tx.getReceiver().bech32(), result.getReceiver().bech32());
-        assertEquals(tokenIdentifier, result.getTokenIdentifier());
+        assertEquals(tokenIdentifierHex, result.getTokenIdentifier());
         assertEquals(valueToTransfer, result.getValueToTransfer());
         assertEquals(nonce, result.getNonce());
     }
@@ -146,9 +146,9 @@ public class ESDTFunctionsTest {
     @Test
     public void shouldConstructESDTTransferPayload() throws Exceptions.AddressException {
         Address receiver = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
-        String tokenIdentifier = "4552444a4156412d333866323439";
+        String tokenIdentifierHex = "4552444a4156412d333866323439";
         BigInteger value = new BigInteger("100");
-        ESDTTransferTypes types = new ESDTTransferTypes(receiver, receiver, tokenIdentifier, value);
+        ESDTTransferTypes types = new ESDTTransferTypes(receiver, receiver, tokenIdentifierHex, value);
 
         String result = ESDTFunctions.constructESDTTransferPayload(types);
 
@@ -163,10 +163,10 @@ public class ESDTFunctionsTest {
     @Test
     public void shouldConstructNFTTransferPayload() throws Exceptions.AddressException {
         Address receiver = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
-        String tokenIdentifier = "4552444a4156412d333866323439";
+        String tokenIdentifierHex = "4552444a4156412d333866323439";
         BigInteger value = new BigInteger("100");
         long nonce = 115;
-        ESDTNFTTransferTypes types = new ESDTNFTTransferTypes(receiver, receiver, tokenIdentifier, value, nonce);
+        ESDTNFTTransferTypes types = new ESDTNFTTransferTypes(receiver, receiver, tokenIdentifierHex, value, nonce);
 
         String result = ESDTFunctions.constructNFTTransferPayload(types);
 

@@ -117,7 +117,7 @@ public class TransactionTest {
                 .setPayment(TokenPayment.fungibleFromAmount(TokenIdentifier.fromString("WEGLD-4r5t6y"), "155", 18))
                 .build();
 
-        // this action of this transaction is:
+        // the action of this transaction is:
         // erd1lta2vgd0tkeqqadkvgef73y0efs6n3xe5ss589ufhvmt6tcur8kq34qkwr sends 155 WEGLD-4r5t6y tokens
         // to erd1p72ru5zcdsvgkkcm9swtvw2zy5epylwgv8vwquptkw7ga7pfvk7qz7snzw
 
@@ -145,7 +145,7 @@ public class TransactionTest {
                 .setReceiver(Address.fromBech32("erd1p72ru5zcdsvgkkcm9swtvw2zy5epylwgv8vwquptkw7ga7pfvk7qz7snzw"))
                 .build();
 
-        // this action of this transaction is:
+        // the action of this transaction is:
         // erd1lta2vgd0tkeqqadkvgef73y0efs6n3xe5ss589ufhvmt6tcur8kq34qkwr sends one NFT called MYNFT-4r5t6y with nonce 37
         // to erd1p72ru5zcdsvgkkcm9swtvw2zy5epylwgv8vwquptkw7ga7pfvk7qz7snzw
 
