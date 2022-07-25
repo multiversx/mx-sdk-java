@@ -2,9 +2,6 @@ package elrond.esdt.common;
 
 import org.junit.Test;
 
-import java.math.BigInteger;
-import java.util.Collections;
-
 import static org.junit.Assert.assertEquals;
 
 public class TokenPaymentTest {
@@ -18,7 +15,7 @@ public class TokenPaymentTest {
     }
 
     @Test
-    public void fungibleFromAount() {
+    public void fungibleFromAmount() {
         assertEquals("50000000000000", TokenPayment.fungibleFromAmount(Constants.EGLDIdentifier, "0.00005", 18).toString());
         assertEquals("2d79883d2000", TokenPayment.fungibleFromAmount(Constants.EGLDIdentifier, "0.00005", 18).valueToHexString());
 
@@ -28,27 +25,8 @@ public class TokenPaymentTest {
     }
 
     @Test
-    public void TestBigInteger() {
-        BigInteger bi = new BigInteger("5");
-        BigInteger multipliedBy = new BigInteger("1000000000000000000");
-
-        BigInteger res = bi.multiply(multipliedBy);
-
-        System.out.println(res);
-
-        System.out.println("1" + String.join("", Collections.nCopies(5, "0")));
-    }
-
-    @Test
-    public void TestBIEvenChar() {
-
-    }
-
-    @Test
-    public void egldFromBigInteger() {
-    }
-
-    @Test
-    public void fungibleFromAmount() {
+    public void metaEsdtFromAmount() {
+        assertEquals("50000000000000000000", TokenPayment.metaEsdtFromAmount(TokenIdentifier.fromString("META-6y7u8i"), "50", 18, 5L).toString());
+        assertEquals("042c1d80", TokenPayment.metaEsdtFromAmount(TokenIdentifier.fromString("META-6y7u8i"), "0.07", 9, 7L).valueToHexString());
     }
 }

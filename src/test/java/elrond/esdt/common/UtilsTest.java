@@ -22,5 +22,6 @@ public class UtilsTest {
         assertEquals("07", Utils.castToPaddedHex(7));
         assertEquals("64", Utils.castToPaddedHex(100));
 
+        assertEquals("5745474c442d357436793775", Utils.castToPaddedHex("WEGLD-5t6y7u"));
     }
 }

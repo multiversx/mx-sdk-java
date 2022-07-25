@@ -37,6 +37,15 @@ public class TokenPayment {
         return new TokenPayment(tokenIdentifier, amountAsBigDecimal, numDecimals, 0L);
     }
 
+    public static TokenPayment metaEsdtFromAmount(TokenIdentifier tokenIdentifier, String amount, Integer numDecimals, Long nonce) {
+        BigDecimal amountAsBigDecimal = increaseMagnitude(new BigDecimal(amount), numDecimals);
+        return TokenPayment.metaEsdtFromBigDecimal(tokenIdentifier, amountAsBigDecimal, numDecimals, nonce);
+    }
+
+    public static TokenPayment metaEsdtFromBigDecimal(TokenIdentifier tokenIdentifier, BigDecimal amountAsBigDecimal, Integer numDecimals, Long nonce) {
+        return new TokenPayment(tokenIdentifier, amountAsBigDecimal, numDecimals, nonce);
+    }
+
     public static TokenPayment semiFungible(TokenIdentifier tokenIdentifier, Integer quantity, Long nonce) {
         return new TokenPayment(tokenIdentifier, new BigDecimal(quantity.toString()), 0, nonce);
     }

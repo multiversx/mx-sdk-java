@@ -3,6 +3,7 @@ package elrond.esdt;
 import elrond.Address;
 import elrond.Exceptions;
 import elrond.Transaction;
+import elrond.esdt.common.Utils;
 import elrond.esdt.dtos.ESDTNFTTransferTypes;
 import elrond.esdt.dtos.ESDTTransferTypes;
 import org.junit.Test;
@@ -50,7 +51,8 @@ public class ESDTFunctionsTest {
 
         Address sender = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
         Address receiver = Address.fromHex("c70cf50b238372fffaf7b7c5723b06b57859d424a2da621bcc1b2f317543aa36");
-        String tokenIdentifierHex = "4552444a4156412d333866323439";
+        String tokenIdentifier = "ERDJAVA-38f249";
+        String tokenIdentifierHex = Utils.castToPaddedHex(tokenIdentifier);
         BigInteger valueToTransfer = new BigInteger("100");
 
         // construct and test the data field
@@ -78,7 +80,8 @@ public class ESDTFunctionsTest {
 
         Address sender = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
         Address receiver = Address.fromHex("c70cf50b238372fffaf7b7c5723b06b57859d424a2da621bcc1b2f317543aa36");
-        String tokenIdentifierHex = "4552444a4156412d333866323439";
+        String tokenIdentifier = "ERDJAVA-38f249";
+        String tokenIdentifierHex = Utils.castToPaddedHex(tokenIdentifier);
         BigInteger valueToTransfer = new BigInteger("100");
         long nonce = 20;
 
@@ -146,7 +149,8 @@ public class ESDTFunctionsTest {
     @Test
     public void shouldConstructESDTTransferPayload() throws Exceptions.AddressException {
         Address receiver = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
-        String tokenIdentifierHex = "4552444a4156412d333866323439";
+        String tokenIdentifier = "ERDJAVA-38f249";
+        String tokenIdentifierHex = Utils.castToPaddedHex(tokenIdentifier);
         BigInteger value = new BigInteger("100");
         ESDTTransferTypes types = new ESDTTransferTypes(receiver, receiver, tokenIdentifierHex, value);
 
@@ -163,7 +167,8 @@ public class ESDTFunctionsTest {
     @Test
     public void shouldConstructNFTTransferPayload() throws Exceptions.AddressException {
         Address receiver = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
-        String tokenIdentifierHex = "4552444a4156412d333866323439";
+        String tokenIdentifier = "ERDJAVA-38f249";
+        String tokenIdentifierHex = Utils.castToPaddedHex(tokenIdentifier);
         BigInteger value = new BigInteger("100");
         long nonce = 115;
         ESDTNFTTransferTypes types = new ESDTNFTTransferTypes(receiver, receiver, tokenIdentifierHex, value, nonce);

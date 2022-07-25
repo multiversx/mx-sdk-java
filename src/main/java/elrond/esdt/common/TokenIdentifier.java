@@ -13,7 +13,7 @@ public class TokenIdentifier {
 
     public static TokenIdentifier fromString(String tokenIdentifier) {
         TokenIdentifier ti = new TokenIdentifier();
-        ti.hexTokenIdentifier = Hex.encodeHexString(tokenIdentifier.getBytes(StandardCharsets.UTF_8));
+        ti.hexTokenIdentifier = Utils.castToPaddedHex(tokenIdentifier);
 
         return ti;
     }
