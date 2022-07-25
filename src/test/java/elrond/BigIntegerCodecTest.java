@@ -32,6 +32,7 @@ public class BigIntegerCodecTest {
                 new TxValueBytesPair("1500", "0005dc"),
                 new TxValueBytesPair("1505", "0005e1"),
                 new TxValueBytesPair("1793", "000701"),
+                new TxValueBytesPair("50000000000000", "002d79883d2000"),
                 new TxValueBytesPair("1000000000000000000", "000de0b6b3a7640000"),
                 new TxValueBytesPair("1000000000000000001", "000de0b6b3a7640001"),
                 new TxValueBytesPair("1000000000000000000", "000de0b6b3a7640000"),
