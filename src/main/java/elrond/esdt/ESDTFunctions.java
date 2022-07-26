@@ -82,6 +82,10 @@ public class ESDTFunctions {
         );
     }
 
+    /**
+     * This function is deprecated. We recommend using ESDTTransferBuilder
+     */
+    @Deprecated
     public static String constructESDTTransferPayload(ESDTTransferTypes types) {
         return ESDTConstants.ESDTTransferPrefix +
                 ESDTConstants.ScCallArgumentsSeparator +
@@ -90,6 +94,10 @@ public class ESDTFunctions {
                 prepareHexValue(types.getValueToTransfer().toString(16));
     }
 
+    /**
+     * This function is deprecated. We recommend using ESDTNFTTransferBuilder
+     */
+    @Deprecated
     public static String constructNFTTransferPayload(ESDTNFTTransferTypes types) {
         return ESDTConstants.ESDTNFTTransferPrefix +
                 ESDTConstants.ScCallArgumentsSeparator +
