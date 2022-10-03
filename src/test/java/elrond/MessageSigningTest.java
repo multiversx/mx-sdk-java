@@ -30,6 +30,6 @@ public class MessageSigningTest {
         String sigHex = messageSigner.SignMessage(message);
 
         boolean verified = messageSigner.VerifyMessageSignature(publicKey.getEncoded(), message, sigHex);
-        assertEquals(true, verified);
+        assertTrue(verified);
     }
 }
