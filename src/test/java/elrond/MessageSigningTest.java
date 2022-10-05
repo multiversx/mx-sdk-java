@@ -21,11 +21,10 @@ public class MessageSigningTest {
         String privateKeyHex = "06a180420e608220a6c2f997751a53f5bd3bbe63d36260a858a6d925daed593d";
         byte[] privateKey = Hex.decode(privateKeyHex);
 
-        MessageSigning messageSigner = new MessageSigning();
         byte[] message = "message to sign".getBytes("utf-8");
 
         String expectedSigHex = "c95ada60e1a58849234a5e95e0a80e149630585cb1b589c20cff09c283438e163c8a5bc595730538809bbcfbafbef2a991c74523268712d3220d636b60de8309";
-        String sigHex = messageSigner.sign(privateKey, message);
+        String sigHex = MessageSigning.sign(privateKey, message);
         assertEquals(expectedSigHex, sigHex);
     }
 
@@ -38,16 +37,14 @@ public class MessageSigningTest {
         Ed25519PrivateKeyParameters privatekey = (Ed25519PrivateKeyParameters) keyPair.getPrivate();
         Ed25519PublicKeyParameters publicKey = (Ed25519PublicKeyParameters) keyPair.getPublic();
 
-        MessageSigning messageSigner = new MessageSigning();
-
         byte[] message = "message to sign".getBytes("utf-8");
-        String sigHex = messageSigner.sign(privatekey.getEncoded(), message);
+        String sigHex = MessageSigning.sign(privatekey.getEncoded(), message);
         assertNotNull(sigHex);
 
         String publicKeyHex = Hex.toHexString(publicKey.getEncoded());
         Address address = Address.fromHex(publicKeyHex);
 
-        boolean verified = messageSigner.verify(address, message, sigHex);
+        boolean verified = MessageSigning.verify(address, message, sigHex);
         assertTrue(verified);
     }
 }
