@@ -4,10 +4,13 @@ import org.bouncycastle.crypto.digests.KeccakDigest;
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters;
 import org.bouncycastle.crypto.params.Ed25519PublicKeyParameters;
 import org.bouncycastle.crypto.signers.Ed25519Signer;
+import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;
 
+import java.nio.charset.StandardCharsets;
+
 public class MessageSigning {
-    private static final String signerMessagePrefix = "\\x17Elrond Signed Message:\n";
+    private static final String signerMessagePrefix = "\u0017Elrond Signed Message:\n";
 
     public MessageSigning() {
     }
@@ -50,27 +53,26 @@ public class MessageSigning {
         return signer.verifySignature(sig);
     }
 
-    private static byte[] composeMessage(byte[] msg) {
+    private static String composeMessage(byte[] msg) {
         final StringBuilder sb = new StringBuilder();
 
         sb.append(signerMessagePrefix);
         sb.append(msg.length);
         for (byte b : msg) {
-            sb.append(b);
+            sb.append((char)b);
         }
 
-        return sb.toString().getBytes();
+        return sb.toString();
     }
 
     private static byte[] computeHashOnMessage(byte[] msg) {
-        KeccakDigest hasher = createKeccakHasher();
-        byte[] message = composeMessage(msg);
+        Keccak.DigestKeccak hasher = createKeccakHasher();
+        String message = composeMessage(msg);
+        byte[] messageBytes = message.getBytes();
 
-        hasher.update(message, 0, message.length);
-        final byte[] marshalledMsg = new byte[hasher.getDigestSize()];
-        hasher.doFinal(marshalledMsg, 0);
+        byte[] hash = hasher.digest(messageBytes);
 
-        return marshalledMsg;
+        return hash;
     }
 
     private static Ed25519Signer createSignerWithPrivateKey(byte[] privateKey) {
@@ -87,7 +89,7 @@ public class MessageSigning {
         return signer;
     }
 
-    private static KeccakDigest createKeccakHasher() {
-        return new KeccakDigest();
+    private static Keccak.DigestKeccak createKeccakHasher() {
+        return new Keccak.Digest256();
     }
 }

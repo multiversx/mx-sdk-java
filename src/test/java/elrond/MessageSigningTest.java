@@ -1,9 +1,9 @@
 package elrond;
 
-import org.bouncycastle.util.encoders.Hex;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
@@ -11,20 +11,30 @@ import org.bouncycastle.crypto.params.Ed25519KeyGenerationParameters;
 import org.bouncycastle.crypto.generators.Ed25519KeyPairGenerator;
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters;
 import org.bouncycastle.crypto.params.Ed25519PublicKeyParameters;
+import org.bouncycastle.util.encoders.Hex;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MessageSigningTest {
 
     @Test
+    public void verifyMessageSignature() throws UnsupportedEncodingException, Exceptions.AddressException {
+        String message = "custom message of Alice";
+        Address address = Address.fromBech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th");
+        String sig = "b83647b88cdc7904895f510250cc735502bf4fd86331dd1b76e078d6409433753fd6f619fc7f8152cf8589a4669eb8318b2e735e41309ed3b60e64221d814f08";
+
+        boolean verified = MessageSigning.verify(address, message.getBytes(StandardCharsets.UTF_8), sig);
+        assertTrue(verified);
+    }
+    @Test
     public void signMessage() throws UnsupportedEncodingException {
-        String privateKeyHex = "06a180420e608220a6c2f997751a53f5bd3bbe63d36260a858a6d925daed593d";
+        String privateKeyHex = "413f42575f7f26fad3317a778771212fdb80245850981e48b58a4f25e344e8f9";
+        String msg = "custom message of Alice";
+
         byte[] privateKey = Hex.decode(privateKeyHex);
 
-        byte[] message = "message to sign".getBytes("utf-8");
-
-        String expectedSigHex = "c95ada60e1a58849234a5e95e0a80e149630585cb1b589c20cff09c283438e163c8a5bc595730538809bbcfbafbef2a991c74523268712d3220d636b60de8309";
-        String sigHex = MessageSigning.sign(privateKey, message);
+        String expectedSigHex = "b83647b88cdc7904895f510250cc735502bf4fd86331dd1b76e078d6409433753fd6f619fc7f8152cf8589a4669eb8318b2e735e41309ed3b60e64221d814f08";
+        String sigHex = MessageSigning.sign(privateKey, msg.getBytes("utf-8"));
         assertEquals(expectedSigHex, sigHex);
     }
 
