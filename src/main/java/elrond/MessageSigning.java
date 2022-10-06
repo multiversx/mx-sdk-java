@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 public class MessageSigning {
     private static final String signerMessagePrefix = "\u0017Elrond Signed Message:\n";
 
-    public MessageSigning() {
+    private MessageSigning() {
     }
 
     /**
