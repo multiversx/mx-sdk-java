@@ -1,8 +1,8 @@
-# Elrond Java SDK
+# MultiversX Java SDK
 
 ## Introduction
 
-`erdjava` is an SDK written in Java, useful for interacting with the Elrond Network.
+`erdjava` is an SDK written in Java, useful for interacting with the MultiversX Network.
 
 ## Prerequisites
 
@@ -18,8 +18,12 @@ sudo apt install maven
 
 ## Get `erdjava`
 
+`erdjava` can be fetched directly from Maven central repository.
+
+Alternatively, you can use:
+
 ```
-git clone --depth 1 -b development https://github.com/ElrondNetwork/elrond-sdk.git
-cd elrond-sdk/erdjava
+git clone --depth 1 -b main https://github.com/multiversx/mx-sdk-erdjava.git
+cd multiversx-sdk/erdjava
 mvn test
 ```

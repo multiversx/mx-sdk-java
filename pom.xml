@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.elrond</groupId>
+    <groupId>com.multiversx</groupId>
     <artifactId>erdjava</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 
     <name>erdjava</name>
-    <description>The Java 1.8 SDK for interacting with the Elrond blockchain</description>
-    <url>https://github.com/ElrondNetwork/elrond-sdk-erdjava</url>
+    <description>The Java 1.8 SDK for interacting with the MultiversX blockchain</description>
+    <url>https://github.com/multiversx/mx-sdk-erdjava</url>
 
     <licenses>
         <license>
@@ -21,17 +21,17 @@
 
     <developers>
         <developer>
-            <name>Elrond team</name>
-            <email>contact@elrond.com</email>
-            <organization>Elrond Network</organization>
-            <organizationUrl>https://www.elrond.com</organizationUrl>
+            <name>MultiversX team</name>
+            <email>contact@multiversx.com</email>
+            <organization>MultiversX</organization>
+            <organizationUrl>https://www.multiversx.com</organizationUrl>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/ElrondNetwork/elrond-sdk-erdjava.git</connection>
-        <developerConnection>scm:git:ssh://github.com:ElrondNetwork/elrond-sdk-erdjava.git</developerConnection>
-        <url>https://github.com/ElrondNetwork/elrond-sdk-erdjava/tree/main</url>
+        <connection>scm:git:git://github.com/multiversx/mx-sdk-erdjava.git</connection>
+        <developerConnection>scm:git:ssh://github.com:multiversx/mx-sdk-erdjava.git</developerConnection>
+        <url>https://github.com/multiversx/mx-sdk-erdjava/tree/main</url>
     </scm>
 
     <properties>
