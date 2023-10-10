@@ -2,7 +2,7 @@
 
 ## Introduction
 
-`mxjava` is an SDK written in Java, useful for interacting with the MultiversX Network.
+`mxjava` (previously named `erdjava`) is an SDK written in Java, useful for interacting with the MultiversX Network.
 
 ## Prerequisites
 

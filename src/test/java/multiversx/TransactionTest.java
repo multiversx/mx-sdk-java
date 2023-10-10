@@ -17,7 +17,7 @@ public class TransactionTest {
 
         // Without data field
         transaction.setNonce(0);
-        transaction.setValue(new BigInteger("123456789000000000000000000000"));
+        transaction.setValue(new BigInteger("42"));
         transaction.setSender(Address.fromBech32("erd1l453hd0gt5gzdp7czpuall8ggt2dcv5zwmfdf3sd3lguxseux2fsmsgldz"));
         transaction.setReceiver(Address.fromBech32("erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r"));
         transaction.setGasPrice(1000000000);
@@ -49,7 +49,8 @@ public class TransactionTest {
 
         transaction.setGuardianAddress(Address.fromBech32("erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r"));
         transaction.setGuardianSignature("11001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100");
-        String expected = ("{'nonce':92,'value':'123456789000000000000000000000','receiver':'erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx','sender':'erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th','gasPrice':1000000000,'gasLimit':150000,'data':'dGVzdCBkYXRhIGZpZWxk','chainID':'local-testnet','version':1,'guardianAddress':'erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r','guardianSignature':'11001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100'}").replace('\'', '"');
+        // we also assert that the guardian signature isn't included in the tx's serialization
+        String expected = ("{'nonce':92,'value':'123456789000000000000000000000','receiver':'erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx','sender':'erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th','gasPrice':1000000000,'gasLimit':150000,'data':'dGVzdCBkYXRhIGZpZWxk','chainID':'local-testnet','version':1,'guardian':'erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r'}").replace('\'', '"');
         assertEquals(expected, transaction.serialize());
     }
 
@@ -142,8 +143,6 @@ public class TransactionTest {
 
     @Test
     public void shouldConstructESDTTransferTransaction() throws Exception {
-        Wallet wallet = Wallet.deriveFromMnemonic("blind wisdom book round sing capable taste refuse simple thunder profit goddess bird adult skirt road box patient cost tape lawn invite visual rabbit", 0);
-
         // Without data field
         Transaction transaction = new Transaction();
         transaction.setNonce(1);
@@ -169,9 +168,7 @@ public class TransactionTest {
 
     @Test
     public void shouldConstructESDTNFTTransferTransaction() throws Exception {
-        Wallet wallet = Wallet.deriveFromMnemonic("blind wisdom book round sing capable taste refuse simple thunder profit goddess bird adult skirt road box patient cost tape lawn invite visual rabbit", 0);
-
-        // Without data field
+       // Without data field
         Transaction transaction = new Transaction();
         transaction.setNonce(1);
         transaction.setValue(new BigInteger("1000000000000000"));
