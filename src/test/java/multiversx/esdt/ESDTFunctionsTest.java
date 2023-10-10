@@ -51,7 +51,7 @@ public class ESDTFunctionsTest {
 
         Address sender = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
         Address receiver = Address.fromHex("c70cf50b238372fffaf7b7c5723b06b57859d424a2da621bcc1b2f317543aa36");
-        String tokenIdentifier = "ERDJAVA-38f249";
+        String tokenIdentifier = "MXJAVA-38f249";
         String tokenIdentifierHex = Utils.castToPaddedHex(tokenIdentifier);
         BigInteger valueToTransfer = new BigInteger("100");
 
@@ -61,7 +61,7 @@ public class ESDTFunctionsTest {
                 tokenIdentifierHex +
                 ESDTConstants.ScCallArgumentsSeparator +
                 valueToTransfer.toString(16);
-        assertEquals("ESDTTransfer@4552444a4156412d333866323439@64", txPayload); // check the construction of the data field
+        assertEquals("ESDTTransfer@4d584a4156412d333866323439@64", txPayload); // check the construction of the data field
 
         tx.setSender(sender);
         tx.setReceiver(receiver);
@@ -80,7 +80,7 @@ public class ESDTFunctionsTest {
 
         Address sender = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
         Address receiver = Address.fromHex("c70cf50b238372fffaf7b7c5723b06b57859d424a2da621bcc1b2f317543aa36");
-        String tokenIdentifier = "ERDJAVA-38f249";
+        String tokenIdentifier = "MXJAVA-38f249";
         String tokenIdentifierHex = Utils.castToPaddedHex(tokenIdentifier);
         BigInteger valueToTransfer = new BigInteger("100");
         long nonce = 20;
@@ -96,7 +96,7 @@ public class ESDTFunctionsTest {
                 ESDTConstants.ScCallArgumentsSeparator +
                 receiver.hex();
 
-        assertEquals("ESDTNFTTransfer@4552444a4156412d333866323439@14@64@c70cf50b238372fffaf7b7c5723b06b57859d424a2da621bcc1b2f317543aa36", txPayload); // check the construction of the data field
+        assertEquals("ESDTNFTTransfer@4d584a4156412d333866323439@14@64@c70cf50b238372fffaf7b7c5723b06b57859d424a2da621bcc1b2f317543aa36", txPayload); // check the construction of the data field
 
         tx.setSender(sender);
         tx.setReceiver(receiver);
@@ -149,25 +149,25 @@ public class ESDTFunctionsTest {
     @Test
     public void shouldConstructESDTTransferPayload() throws Exceptions.AddressException {
         Address receiver = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
-        String tokenIdentifier = "ERDJAVA-38f249";
+        String tokenIdentifier = "MXJAVA-38f249";
         String tokenIdentifierHex = Utils.castToPaddedHex(tokenIdentifier);
         BigInteger value = new BigInteger("100");
         ESDTTransferTypes types = new ESDTTransferTypes(receiver, receiver, tokenIdentifierHex, value);
 
         String result = ESDTFunctions.constructESDTTransferPayload(types);
 
-        assertEquals("ESDTTransfer@4552444a4156412d333866323439@64", result);
+        assertEquals("ESDTTransfer@4d584a4156412d333866323439@64", result);
 
         // test value with odd number of characters in hex representation. 10 = a => should be converted to 0a
         types.setValueToTransfer(new BigInteger("10"));
         result = ESDTFunctions.constructESDTTransferPayload(types);
-        assertEquals("ESDTTransfer@4552444a4156412d333866323439@0a", result);
+        assertEquals("ESDTTransfer@4d584a4156412d333866323439@0a", result);
     }
 
     @Test
     public void shouldConstructNFTTransferPayload() throws Exceptions.AddressException {
         Address receiver = Address.fromHex("fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293");
-        String tokenIdentifier = "ERDJAVA-38f249";
+        String tokenIdentifier = "MXJAVA-38f249";
         String tokenIdentifierHex = Utils.castToPaddedHex(tokenIdentifier);
         BigInteger value = new BigInteger("100");
         long nonce = 115;
@@ -175,16 +175,16 @@ public class ESDTFunctionsTest {
 
         String result = ESDTFunctions.constructNFTTransferPayload(types);
 
-        assertEquals("ESDTNFTTransfer@4552444a4156412d333866323439@73@64@fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293", result);
+        assertEquals("ESDTNFTTransfer@4d584a4156412d333866323439@73@64@fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293", result);
 
         // test nonce with odd number of characters in hex representation. 10 = a => should be converted to 0a
         types.setNonce(10);
         result = ESDTFunctions.constructNFTTransferPayload(types);
-        assertEquals("ESDTNFTTransfer@4552444a4156412d333866323439@0a@64@fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293", result);
+        assertEquals("ESDTNFTTransfer@4d584a4156412d333866323439@0a@64@fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293", result);
 
         // test value with odd number of characters in hex representation. 11 = b => should be converted to 0b
         types.setValueToTransfer(new BigInteger("11"));
         result = ESDTFunctions.constructNFTTransferPayload(types);
-        assertEquals("ESDTNFTTransfer@4552444a4156412d333866323439@0a@0b@fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293", result);
+        assertEquals("ESDTNFTTransfer@4d584a4156412d333866323439@0a@0b@fd691bb5e85d102687d81079dffce842d4dc328276d2d4c60d8fd1c3433c3293", result);
     }
 }

@@ -17,7 +17,7 @@ public class TransactionTest {
 
         // Without data field
         transaction.setNonce(0);
-        transaction.setValue(new BigInteger("42"));
+        transaction.setValue(new BigInteger("123456789000000000000000000000"));
         transaction.setSender(Address.fromBech32("erd1l453hd0gt5gzdp7czpuall8ggt2dcv5zwmfdf3sd3lguxseux2fsmsgldz"));
         transaction.setReceiver(Address.fromBech32("erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r"));
         transaction.setGasPrice(1000000000);
@@ -30,6 +30,26 @@ public class TransactionTest {
         // With data field
         transaction.setData("foobar");
         expected = "{'nonce':0,'value':'42','receiver':'erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r','sender':'erd1l453hd0gt5gzdp7czpuall8ggt2dcv5zwmfdf3sd3lguxseux2fsmsgldz','gasPrice':1000000000,'gasLimit':50000,'data':'Zm9vYmFy','chainID':'1','version':1}".replace('\'', '"');
+        assertEquals(expected, transaction.serialize());
+    }
+
+    @Test
+    public void shouldSerializeWhenGuardianFieldsAreSet() throws Exception {
+        Transaction transaction = new Transaction();
+
+        // Without data field
+        transaction.setNonce(92);
+        transaction.setValue(new BigInteger("123456789000000000000000000000"));
+        transaction.setSender(Address.fromBech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th"));
+        transaction.setReceiver(Address.fromBech32("erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx"));
+        transaction.setGasPrice(1000000000);
+        transaction.setGasLimit(150000);
+        transaction.setChainID("local-testnet");
+        transaction.setData("test data field");
+
+        transaction.setGuardianAddress(Address.fromBech32("erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r"));
+        transaction.setGuardianSignature("11001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100");
+        String expected = ("{'nonce':92,'value':'123456789000000000000000000000','receiver':'erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx','sender':'erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th','gasPrice':1000000000,'gasLimit':150000,'data':'dGVzdCBkYXRhIGZpZWxk','chainID':'local-testnet','version':1,'guardianAddress':'erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r','guardianSignature':'11001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100'}").replace('\'', '"');
         assertEquals(expected, transaction.serialize());
     }
 
@@ -97,6 +117,27 @@ public class TransactionTest {
         transaction.sign(wallet);
 
         assertEquals("3fb8406c408fbdd9b01ce8c8a0dcbb1a382cba713a132f40d552ec8db63c89a5", transaction.computeHash());
+    }
+
+    @Test
+    public void shouldComputeHashWhenGuardianFieldsAreSet() throws Exception {
+        Wallet wallet = new Wallet("413f42575f7f26fad3317a778771212fdb80245850981e48b58a4f25e344e8f9");
+
+        Transaction transaction = new Transaction();
+        transaction.setNonce(92);
+        transaction.setValue(new BigInteger("123456789000000000000000000000"));
+        transaction.setSender(Address.fromBech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th"));
+        transaction.setReceiver(Address.fromBech32("erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx"));
+        transaction.setGasPrice(1000000000);
+        transaction.setGasLimit(150000);
+        transaction.setChainID("local-testnet");
+        transaction.setData("test data field");
+
+        transaction.setGuardianAddress(Address.fromBech32("erd1x23lzn8483xs2su4fak0r0dqx6w38enpmmqf2yrkylwq7mfnvyhsxqw57y"));
+        transaction.setGuardianSignature("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+        transaction.sign(wallet);
+
+        assertEquals("a5e63b5bf3b7eeb347cad1aa742770a29c7a88e59ac99cdc60dc612ebdc8a7d4", transaction.computeHash());
     }
 
     @Test

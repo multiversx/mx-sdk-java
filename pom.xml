@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.multiversx</groupId>
-    <artifactId>erdjava</artifactId>
+    <artifactId>mxjava</artifactId>
     <version>2.0.0</version>
 
-    <name>erdjava</name>
+    <name>mxjava</name>
     <description>The Java 1.8 SDK for interacting with the MultiversX blockchain</description>
-    <url>https://github.com/multiversx/mx-sdk-erdjava</url>
+    <url>https://github.com/multiversx/mx-sdk-java</url>
 
     <licenses>
         <license>
@@ -29,9 +29,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/multiversx/mx-sdk-erdjava.git</connection>
-        <developerConnection>scm:git:ssh://github.com:multiversx/mx-sdk-erdjava.git</developerConnection>
-        <url>https://github.com/multiversx/mx-sdk-erdjava/tree/main</url>
+        <connection>scm:git:git://github.com/multiversx/mx-sdk-java.git</connection>
+        <developerConnection>scm:git:ssh://github.com:multiversx/mx-sdk-java.git</developerConnection>
+        <url>https://github.com/multiversx/mx-sdk-java/tree/main</url>
     </scm>
 
     <properties>
