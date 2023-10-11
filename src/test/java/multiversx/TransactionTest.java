@@ -37,7 +37,6 @@ public class TransactionTest {
     public void shouldSerializeWhenGuardianFieldsAreSet() throws Exception {
         Transaction transaction = new Transaction();
 
-        // Without data field
         transaction.setNonce(92);
         transaction.setValue(new BigInteger("123456789000000000000000000000"));
         transaction.setSender(Address.fromBech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th"));
