@@ -2,7 +2,7 @@
 
 ## Introduction
 
-`erdjava` is an SDK written in Java, useful for interacting with the MultiversX Network.
+`mxjava` (previously named `erdjava`) is an SDK written in Java, useful for interacting with the MultiversX Network.
 
 ## Prerequisites
 
@@ -16,14 +16,14 @@ sudo apt install default-jre
 sudo apt install maven
 ```
 
-## Get `erdjava`
+## Get `mxjava`
 
-`erdjava` can be fetched directly from Maven central repository.
+`mxjava` can be fetched directly from Maven central repository.
 
 Alternatively, you can use:
 
 ```
-git clone --depth 1 -b main https://github.com/multiversx/mx-sdk-erdjava.git
-cd multiversx-sdk/erdjava
+git clone --depth 1 -b main https://github.com/multiversx/mx-sdk-java.git
+cd mx-sdk-java
 mvn test
 ```

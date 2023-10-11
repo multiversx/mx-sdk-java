@@ -34,6 +34,26 @@ public class TransactionTest {
     }
 
     @Test
+    public void shouldSerializeWhenGuardianFieldsAreSet() throws Exception {
+        Transaction transaction = new Transaction();
+
+        transaction.setNonce(92);
+        transaction.setValue(new BigInteger("123456789000000000000000000000"));
+        transaction.setSender(Address.fromBech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th"));
+        transaction.setReceiver(Address.fromBech32("erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx"));
+        transaction.setGasPrice(1000000000);
+        transaction.setGasLimit(150000);
+        transaction.setChainID("local-testnet");
+        transaction.setData("test data field");
+
+        transaction.setGuardianAddress(Address.fromBech32("erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r"));
+        transaction.setGuardianSignature("11001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100");
+        // we also assert that the guardian signature isn't included in the tx's serialization
+        String expected = ("{'nonce':92,'value':'123456789000000000000000000000','receiver':'erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx','sender':'erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th','gasPrice':1000000000,'gasLimit':150000,'data':'dGVzdCBkYXRhIGZpZWxk','chainID':'local-testnet','version':1,'guardian':'erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r'}").replace('\'', '"');
+        assertEquals(expected, transaction.serialize());
+    }
+
+    @Test
     public void shouldSign() throws Exception {
         String alicePrivateKey = "1a927e2af5306a9bb2ea777f73e06ecc0ac9aaa72fb4ea3fecf659451394cccf";
         Wallet wallet = new Wallet(alicePrivateKey);
@@ -100,9 +120,28 @@ public class TransactionTest {
     }
 
     @Test
-    public void shouldConstructESDTTransferTransaction() throws Exception {
-        Wallet wallet = Wallet.deriveFromMnemonic("blind wisdom book round sing capable taste refuse simple thunder profit goddess bird adult skirt road box patient cost tape lawn invite visual rabbit", 0);
+    public void shouldComputeHashWhenGuardianFieldsAreSet() throws Exception {
+        Wallet wallet = new Wallet("413f42575f7f26fad3317a778771212fdb80245850981e48b58a4f25e344e8f9");
 
+        Transaction transaction = new Transaction();
+        transaction.setNonce(92);
+        transaction.setValue(new BigInteger("123456789000000000000000000000"));
+        transaction.setSender(Address.fromBech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th"));
+        transaction.setReceiver(Address.fromBech32("erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx"));
+        transaction.setGasPrice(1000000000);
+        transaction.setGasLimit(150000);
+        transaction.setChainID("local-testnet");
+        transaction.setData("test data field");
+
+        transaction.setGuardianAddress(Address.fromBech32("erd1x23lzn8483xs2su4fak0r0dqx6w38enpmmqf2yrkylwq7mfnvyhsxqw57y"));
+        transaction.setGuardianSignature("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+        transaction.sign(wallet);
+
+        assertEquals("a5e63b5bf3b7eeb347cad1aa742770a29c7a88e59ac99cdc60dc612ebdc8a7d4", transaction.computeHash());
+    }
+
+    @Test
+    public void shouldConstructESDTTransferTransaction() throws Exception {
         // Without data field
         Transaction transaction = new Transaction();
         transaction.setNonce(1);
@@ -128,9 +167,7 @@ public class TransactionTest {
 
     @Test
     public void shouldConstructESDTNFTTransferTransaction() throws Exception {
-        Wallet wallet = Wallet.deriveFromMnemonic("blind wisdom book round sing capable taste refuse simple thunder profit goddess bird adult skirt road box patient cost tape lawn invite visual rabbit", 0);
-
-        // Without data field
+       // Without data field
         Transaction transaction = new Transaction();
         transaction.setNonce(1);
         transaction.setValue(new BigInteger("1000000000000000"));

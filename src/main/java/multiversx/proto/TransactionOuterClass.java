@@ -95,6 +95,18 @@ public final class TransactionOuterClass {
      * @return The options.
      */
     int getOptions();
+
+    /**
+     * <code>bytes GuardianAddr = 14;</code>
+     * @return The guardianAddr.
+     */
+    com.google.protobuf.ByteString getGuardianAddr();
+
+    /**
+     * <code>bytes GuardianSignature = 15;</code>
+     * @return The guardianSignature.
+     */
+    com.google.protobuf.ByteString getGuardianSignature();
   }
   /**
    * <pre>
@@ -121,6 +133,8 @@ public final class TransactionOuterClass {
       data_ = com.google.protobuf.ByteString.EMPTY;
       chainID_ = com.google.protobuf.ByteString.EMPTY;
       signature_ = com.google.protobuf.ByteString.EMPTY;
+      guardianAddr_ = com.google.protobuf.ByteString.EMPTY;
+      guardianSignature_ = com.google.protobuf.ByteString.EMPTY;
     }
 
     @java.lang.Override
@@ -216,6 +230,16 @@ public final class TransactionOuterClass {
             case 104: {
 
               options_ = input.readUInt32();
+              break;
+            }
+            case 114: {
+
+              guardianAddr_ = input.readBytes();
+              break;
+            }
+            case 122: {
+
+              guardianSignature_ = input.readBytes();
               break;
             }
             default: {
@@ -393,6 +417,28 @@ public final class TransactionOuterClass {
       return options_;
     }
 
+    public static final int GUARDIANADDR_FIELD_NUMBER = 14;
+    private com.google.protobuf.ByteString guardianAddr_;
+    /**
+     * <code>bytes GuardianAddr = 14;</code>
+     * @return The guardianAddr.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getGuardianAddr() {
+      return guardianAddr_;
+    }
+
+    public static final int GUARDIANSIGNATURE_FIELD_NUMBER = 15;
+    private com.google.protobuf.ByteString guardianSignature_;
+    /**
+     * <code>bytes GuardianSignature = 15;</code>
+     * @return The guardianSignature.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getGuardianSignature() {
+      return guardianSignature_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -445,6 +491,12 @@ public final class TransactionOuterClass {
       }
       if (options_ != 0) {
         output.writeUInt32(13, options_);
+      }
+      if (!guardianAddr_.isEmpty()) {
+        output.writeBytes(14, guardianAddr_);
+      }
+      if (!guardianSignature_.isEmpty()) {
+        output.writeBytes(15, guardianSignature_);
       }
       unknownFields.writeTo(output);
     }
@@ -507,6 +559,14 @@ public final class TransactionOuterClass {
         size += com.google.protobuf.CodedOutputStream
                 .computeUInt32Size(13, options_);
       }
+      if (!guardianAddr_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeBytesSize(14, guardianAddr_);
+      }
+      if (!guardianSignature_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeBytesSize(15, guardianSignature_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -548,6 +608,10 @@ public final class TransactionOuterClass {
               .equals(other.getSignature())) return false;
       if (getOptions()
               != other.getOptions()) return false;
+      if (!getGuardianAddr()
+              .equals(other.getGuardianAddr())) return false;
+      if (!getGuardianSignature()
+              .equals(other.getGuardianSignature())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -588,6 +652,10 @@ public final class TransactionOuterClass {
       hash = (53 * hash) + getSignature().hashCode();
       hash = (37 * hash) + OPTIONS_FIELD_NUMBER;
       hash = (53 * hash) + getOptions();
+      hash = (37 * hash) + GUARDIANADDR_FIELD_NUMBER;
+      hash = (53 * hash) + getGuardianAddr().hashCode();
+      hash = (37 * hash) + GUARDIANSIGNATURE_FIELD_NUMBER;
+      hash = (53 * hash) + getGuardianSignature().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -751,6 +819,10 @@ public final class TransactionOuterClass {
 
         options_ = 0;
 
+        guardianAddr_ = com.google.protobuf.ByteString.EMPTY;
+
+        guardianSignature_ = com.google.protobuf.ByteString.EMPTY;
+
         return this;
       }
 
@@ -790,6 +862,8 @@ public final class TransactionOuterClass {
         result.version_ = version_;
         result.signature_ = signature_;
         result.options_ = options_;
+        result.guardianAddr_ = guardianAddr_;
+        result.guardianSignature_ = guardianSignature_;
         onBuilt();
         return result;
       }
@@ -876,6 +950,12 @@ public final class TransactionOuterClass {
         }
         if (other.getOptions() != 0) {
           setOptions(other.getOptions());
+        }
+        if (other.getGuardianAddr() != com.google.protobuf.ByteString.EMPTY) {
+          setGuardianAddr(other.getGuardianAddr());
+        }
+        if (other.getGuardianSignature() != com.google.protobuf.ByteString.EMPTY) {
+          setGuardianSignature(other.getGuardianSignature());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1332,6 +1412,74 @@ public final class TransactionOuterClass {
         onChanged();
         return this;
       }
+
+      private com.google.protobuf.ByteString guardianAddr_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes GuardianAddr = 14;</code>
+       * @return The guardianAddr.
+       */
+      @java.lang.Override
+      public com.google.protobuf.ByteString getGuardianAddr() {
+        return guardianAddr_;
+      }
+      /**
+       * <code>bytes GuardianAddr = 14;</code>
+       * @param value The guardianAddr to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGuardianAddr(com.google.protobuf.ByteString value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        guardianAddr_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes GuardianAddr = 14;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGuardianAddr() {
+
+        guardianAddr_ = getDefaultInstance().getGuardianAddr();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString guardianSignature_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes GuardianSignature = 15;</code>
+       * @return The guardianSignature.
+       */
+      @java.lang.Override
+      public com.google.protobuf.ByteString getGuardianSignature() {
+        return guardianSignature_;
+      }
+      /**
+       * <code>bytes GuardianSignature = 15;</code>
+       * @param value The guardianSignature to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGuardianSignature(com.google.protobuf.ByteString value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        guardianSignature_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes GuardianSignature = 15;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGuardianSignature() {
+
+        guardianSignature_ = getDefaultInstance().getGuardianSignature();
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
               final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1399,14 +1547,15 @@ public final class TransactionOuterClass {
           descriptor;
   static {
     java.lang.String[] descriptorData = {
-            "\n\021transaction.proto\"\357\001\n\013Transaction\022\r\n\005N" +
+            "\n\021transaction.proto\"\240\002\n\013Transaction\022\r\n\005N" +
                     "once\030\001 \001(\004\022\r\n\005Value\030\002 \001(\014\022\017\n\007RcvAddr\030\003 \001" +
                     "(\014\022\023\n\013RcvUserName\030\004 \001(\014\022\017\n\007SndAddr\030\005 \001(\014" +
                     "\022\023\n\013SndUserName\030\006 \001(\014\022\020\n\010GasPrice\030\007 \001(\004\022" +
                     "\020\n\010GasLimit\030\010 \001(\004\022\014\n\004Data\030\t \001(\014\022\017\n\007Chain" +
                     "ID\030\n \001(\014\022\017\n\007Version\030\013 \001(\r\022\021\n\tSignature\030\014" +
-                    " \001(\014\022\017\n\007Options\030\r \001(\rB\022\n\020multiversx.prot" +
-                    "ob\006proto3"
+                    " \001(\014\022\017\n\007Options\030\r \001(\r\022\024\n\014GuardianAddr\030\016 " +
+                    "\001(\014\022\031\n\021GuardianSignature\030\017 \001(\014B\022\n\020multiv" +
+                    "ersx.protob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
             .internalBuildGeneratedFileFrom(descriptorData,
@@ -1417,7 +1566,7 @@ public final class TransactionOuterClass {
     internal_static_Transaction_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_Transaction_descriptor,
-            new java.lang.String[] { "Nonce", "Value", "RcvAddr", "RcvUserName", "SndAddr", "SndUserName", "GasPrice", "GasLimit", "Data", "ChainID", "Version", "Signature", "Options", });
+            new java.lang.String[] { "Nonce", "Value", "RcvAddr", "RcvUserName", "SndAddr", "SndUserName", "GasPrice", "GasLimit", "Data", "ChainID", "Version", "Signature", "Options", "GuardianAddr", "GuardianSignature", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

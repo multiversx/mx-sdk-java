@@ -35,6 +35,8 @@ public class Transaction {
     private String chainID;
     private String signature;
     private String txHash;
+    private Address guardianAddress;
+    private String guardianSignature;
 
     public Transaction() {
         this.value = BigInteger.valueOf(0);
@@ -46,6 +48,8 @@ public class Transaction {
         this.chainID = NetworkConfig.getDefault().getChainID();
         this.signature = "";
         this.txHash = "";
+        this.guardianAddress = Address.createZeroAddress();
+        this.guardianSignature = "";
     }
 
     public String serialize() throws CannotSerializeTransactionException {
@@ -76,6 +80,10 @@ public class Transaction {
 
         if (this.signature.length() > 0) {
             map.put("signature", this.signature);
+        }
+
+        if (!Address.createZeroAddress().hex().equals(this.guardianAddress.hex())) {
+            map.put("guardian", this.guardianAddress.bech32());
         }
 
         return map;
@@ -117,6 +125,14 @@ public class Transaction {
 
         if (this.signature.length() > 0) {
             builder = builder.setSignature(ByteString.copyFrom(Hex.decode(getSignature())));
+        }
+
+        if (!Address.createZeroAddress().hex().equals(this.guardianAddress.hex())) {
+            builder = builder.setGuardianAddr(ByteString.copyFrom(this.getGuardianAddress().pubkey()));
+        }
+
+        if (this.guardianSignature.length() > 0) {
+            builder = builder.setGuardianSignature(ByteString.copyFrom(Hex.decode(this.getGuardianSignature())));
         }
 
         multiversx.proto.TransactionOuterClass.Transaction transaction = builder.build();
@@ -205,5 +221,21 @@ public class Transaction {
 
     public String getTxHash() {
         return txHash;
+    }
+
+    public Address getGuardianAddress() {
+        return guardianAddress;
+    }
+
+    public void setGuardianAddress(Address guardianAddress) {
+        this.guardianAddress = guardianAddress;
+    }
+
+    public String getGuardianSignature() {
+        return guardianSignature;
+    }
+
+    public void setGuardianSignature(String guardianSignature) {
+        this.guardianSignature = guardianSignature;
     }
 }
