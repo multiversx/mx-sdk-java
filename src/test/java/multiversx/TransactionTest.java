@@ -49,7 +49,7 @@ public class TransactionTest {
         transaction.setGuardianAddress(Address.fromBech32("erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r"));
         transaction.setGuardianSignature("11001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100");
         // we also assert that the guardian signature isn't included in the tx's serialization
-        String expected = ("{'nonce':92,'value':'123456789000000000000000000000','receiver':'erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx','sender':'erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th','gasPrice':1000000000,'gasLimit':150000,'data':'dGVzdCBkYXRhIGZpZWxk','chainID':'local-testnet','version':1,'guardian':'erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r'}").replace('\'', '"');
+        String expected = ("{'nonce':92,'value':'123456789000000000000000000000','receiver':'erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx','sender':'erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th','gasPrice':1000000000,'gasLimit':150000,'data':'dGVzdCBkYXRhIGZpZWxk','chainID':'local-testnet','version':2,'options':2,'guardian':'erd1cux02zersde0l7hhklzhywcxk4u9n4py5tdxyx7vrvhnza2r4gmq4vw35r'}").replace('\'', '"');
         assertEquals(expected, transaction.serialize());
     }
 
@@ -137,7 +137,7 @@ public class TransactionTest {
         transaction.setGuardianSignature("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         transaction.sign(wallet);
 
-        assertEquals("a5e63b5bf3b7eeb347cad1aa742770a29c7a88e59ac99cdc60dc612ebdc8a7d4", transaction.computeHash());
+        assertEquals("242022e9dcfa0ee1d8199b0043314dbda8601619f70069ebc441b9f03349a35c", transaction.computeHash());
     }
 
     @Test

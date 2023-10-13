@@ -22,6 +22,8 @@ import org.bouncycastle.util.encoders.Hex;
 
 public class Transaction {
     public static final int VERSION = 1;
+    public static final int GUARDIAN_VERSION = 2;
+    public static final int GUARDIAN_OPTIONS = 2;
     private static final int TRANSACTION_HASH_LENGTH = 32;
     private static final Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
@@ -76,13 +78,20 @@ public class Transaction {
         }
 
         map.put("chainID", this.chainID);
-        map.put("version", VERSION);
+
+        boolean hasGuardian = !Address.createZeroAddress().hex().equals(this.guardianAddress.hex());
+        if(hasGuardian) {
+            map.put("version", GUARDIAN_VERSION);
+            map.put("options", GUARDIAN_OPTIONS);
+        } else {
+            map.put("version", VERSION);
+        }
 
         if (this.signature.length() > 0) {
             map.put("signature", this.signature);
         }
 
-        if (!Address.createZeroAddress().hex().equals(this.guardianAddress.hex())) {
+        if (hasGuardian) {
             map.put("guardian", this.guardianAddress.bech32());
         }
 
@@ -116,9 +125,14 @@ public class Transaction {
                 .setGasPrice(this.getGasPrice())
                 .setGasLimit(this.getGasLimit())
                 .setChainID(ByteString.copyFrom(this.getChainID().getBytes(StandardCharsets.UTF_8)))
-                .setData(ByteString.copyFrom(this.getData().getBytes(StandardCharsets.UTF_8)))
-                .setVersion(Transaction.VERSION);
+                .setData(ByteString.copyFrom(this.getData().getBytes(StandardCharsets.UTF_8)));
 
+        boolean hasGuardian = !Address.createZeroAddress().hex().equals(this.guardianAddress.hex());
+        if(hasGuardian) {
+            builder = builder.setVersion(GUARDIAN_VERSION).setOptions(GUARDIAN_OPTIONS);
+        } else {
+            builder = builder.setVersion(VERSION);
+        }
         if (this.data.length() > 0) {
             builder = builder.setData(ByteString.copyFromUtf8(getData()));
         }
@@ -127,7 +141,7 @@ public class Transaction {
             builder = builder.setSignature(ByteString.copyFrom(Hex.decode(getSignature())));
         }
 
-        if (!Address.createZeroAddress().hex().equals(this.guardianAddress.hex())) {
+        if (hasGuardian) {
             builder = builder.setGuardianAddr(ByteString.copyFrom(this.getGuardianAddress().pubkey()));
         }
 
